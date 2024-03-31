@@ -45,7 +45,7 @@
 
         @if (!Auth::user())
             @include('auth.register')
-        @elseif (Auth::user()->isAdmin)
+        @elseif (Auth::user()->isAdmin) 
             @include('layouts.partials.admin')
         @elseif (!Auth::user()->isMechanic && Auth::user()->isClient) 
             @include('layouts.partials.client')

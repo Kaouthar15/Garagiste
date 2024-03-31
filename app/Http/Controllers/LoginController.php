@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
@@ -29,19 +28,22 @@ class LoginController extends Controller
     public function login(LoginRequest $request)
     {
         $credentials = $request->getCredentials();
-
-        if (!Auth::validate($credentials)) :
-            return redirect()->to('login')
-                ->withErrors(trans('auth.failed'));
-        endif;
-
+    
+        if (!Auth::validate($credentials)) {
+            return redirect()->route('login.show')->withErrors(trans('auth.failed'));
+        }
+    
         $user = Auth::getProvider()->retrieveByCredentials($credentials);
+    
+        if (!$user->email_verified_at) {
+            return redirect()->route('login.show')->with('error', 'Please verify your email first.');
+        }
+    
         $remember = $request->has('remember');
         Auth::login($user, $remember);
-
+    
         return $this->authenticated($request, $user);
     }
-
     /**
      * Handle response after user authenticated
      * 
@@ -50,10 +52,8 @@ class LoginController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
-    protected function authenticated(Request $request, $users)
+    protected function authenticated(Request $request, $user)
     {
-       
-        return redirect()->route('home.index'); 
-        
+        return redirect()->route('home.index');
     }
 }

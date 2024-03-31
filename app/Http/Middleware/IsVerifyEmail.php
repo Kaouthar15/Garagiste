@@ -1,28 +1,16 @@
 <?php
-  
 namespace App\Http\Middleware;
-  
+
 use Closure;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-  
-class IsVerifyEmail
+
+class IsEmailVerified
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
-    public function handle(Request $request, Closure $next)
+    public function handle($request, Closure $next)
     {
-        if (!Auth::user()->is_email_verified) {
-            auth()->logout();
-            return redirect()->route('login.show')
-                    ->with('message', 'You need to confirm your account. We have sent you an activation code, please check your email.');
-          }
-   
+        if ($request->user() && !$request->user()->hasVerifiedEmail()) {
+            return redirect()->route('login.show')->with('error', 'You must verify your email address to access this page.');
+        }
+
         return $next($request);
     }
 }

@@ -6,8 +6,13 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index() 
-    {
-        return view('home.index');
-    }
-}
+    function index() {
+        if (auth()->check()) {
+            
+                return view('home.index'); 
+        } else {
+            return view('auth.login');
+        };
+}}
+
+

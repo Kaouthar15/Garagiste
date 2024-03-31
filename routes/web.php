@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\VehicleController;
 use App\Models\Vehicle;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,16 +58,16 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
             'reset-password',
             'ForgotPasswordController@submitResetPasswordForm'
         )->name('reset.password.post');
+
+
+        Route::group(['middleware' => ['auth', 'is_verify_email']], function () {
+            Route::get('dashboard', [RegisterController::class, 'dashboard']);
+        }); 
+        Route::get('account/verify/{token}', [RegisterController::class, 'verifyAccount'])->name('user.verify'); 
     });
 
     Route::group(['middleware' => ['auth']], function () {
-        // Profile edit 
-        // Route::get('/profile/edit', 'AdminController@edit')->name(
-        //     'profile.edit'
-        // );
-        // Route::post('/profile/update', 'AdminController@update')->name(
-        //     'profile.update'
-        // );
+        
         /**
          * Logout Routes
          */
