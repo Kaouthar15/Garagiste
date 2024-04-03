@@ -27,7 +27,8 @@
                     <a class="btn btn-success btn-show" data-registration="{{ $vehicle->registration }}"
                         data-model="{{ $vehicle->model }}" data-fueltype="{{ $vehicle->fuelType }}"
                         data-make="{{ $vehicle->make }}" data-clientphonenumber="{{ $vehicle->user->phoneNumber }}"
-                        data-vehicleid="{{ $vehicle->id }}">show</a>
+                        data-vehicleid="{{ $vehicle->id }}"
+                        v="{{ $vehicle->id }}">show</a>
                 </td>
                 <td>
                     <button type="submit" onclick="confirmDelete({{ $vehicle->id }})"
@@ -36,27 +37,7 @@
 
 
             </tr>
-            <div id="showModal" class="modal">
-                <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <h2>Vehicle Information</h2>
-                    <p><strong>Id:</strong>{{ $vehicle->id }}</p>
-                    <p><strong>Registration:</strong><span id="modalRegistration"></span></p>
-                    <p><strong>Model:</strong> <span id="modalModel"></span></p>
-                    <p><strong>Fuel Type:</strong> <span id="modalFuelType"></span></p>
-                    <p><strong>Make:</strong> <span id="modalMake"></span></p>
-                    <p><strong>Client Phone Number:</strong> <span id="modalClientPhoneNumber"></span></p>
-
-                    @if ($vehicle->images)
-                        <div class="image-container">
-                            @foreach (json_decode($vehicle->images) as $imageName)
-                                <img src="{{ asset('storage/images/' . $imageName) }}" class="vehicle-image"
-                                    alt="Vehicle Image">
-                            @endforeach
-                        </div>
-                    @endif
-                </div>
-            </div>
+           
         @endforeach
     </tbody>
 </table>
@@ -80,18 +61,20 @@
 
 
 @include('modals.vehicle.delete')
+@include('modals.vehicle.show')
 @include('modals.vehicle.edit')
 @section('scripts')
     <script>
         $(document).ready(function() {
             $(".btn-show").click(function() {
             var registration = $(this).data('registration');
+
             var model = $(this).data('model');
             var fuelType = $(this).data('fueltype');
             var make = $(this).data('make');
             var clientPhoneNumber = $(this).data('clientphonenumber');
             var vehicleId = $(this).data('vehicleid');
-
+alert(vehicleId)
             $("#modalId").text(vehicleId);
             $("#modalRegistration").text(registration);
             $("#modalModel").text(model);

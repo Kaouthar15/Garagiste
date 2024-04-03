@@ -2,6 +2,7 @@
     <div class="modal-content">
         <span class="close">&times;</span>
         <h2>Vehicle Information</h2>
+        <p><strong>ID:</strong> <span id="modalId"></span></p>
         <p><strong>Registration:</strong> <span id="modalRegistration"></span></p>
         <p><strong>Model:</strong> <span id="modalModel"></span></p>
         <p><strong>Fuel Type:</strong> <span id="modalFuelType"></span></p>
