@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Exports\UsersExport;
+use App\Imports\UsersImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminController extends Controller
 {
@@ -105,5 +108,22 @@ class AdminController extends Controller
         // $user = User::find(1);
         $user = User::findOrFail($id);
         return view('admin.user.details',compact('user')); 
+    }
+     /**
+    * @return \Illuminate\Support\Collection
+    */
+    public function export() 
+    {
+        return Excel::download(new UsersExport, 'users.xlsx');
+    }
+       
+    /**
+    * @return \Illuminate\Support\Collection
+    */
+    public function import() 
+    {
+        Excel::import(new UsersImport,request()->file('file'));
+               
+        return back();
     }
 }

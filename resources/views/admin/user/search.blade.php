@@ -24,7 +24,20 @@
         </tr>
     </thead>
     <tbody>
+        <tr>
+                <form action="{{ route('users.import') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <input type="file" name="file" class="form-control">
+                    <br>
+                    <button class="btn btn-warning">Import User Data  </button>
+                    <button>&nbsp;&nbsp;&nbsp;</button>
+                <a class="btn btn-primary float-end" href="{{ route('users.export') }}">Export User Data</a>
+
+                </form>
+            </tr>
         @foreach ($users as $user)
+            
+
             <tr>
 
                 {{-- <td>{{ ++$i }}</td>  --}}

@@ -109,11 +109,13 @@
                 </ul>
                 <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
                     <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-                        {{-- @auth
-                            {{ auth()->user()->name }}
-
-                            <a href="{{ route('logout.perform') }}" class="btn btn-primary">Logout</a>
-                        @endauth --}}
+                        <select id="selectLocale">
+                            <option @if (app()->getLocale() == 'ar') selected @endif value="ar">ar</option>
+                            <option @if (app()->getLocale() == 'fr') selected @endif value="fr">fr</option>
+                            <option @if (app()->getLocale() == 'es') selected @endif value="es">es</option>
+                            <option @if (app()->getLocale() == 'en') selected @endif value="en">en</option>
+                        </select>   
+                        
                         @guest
                             <a href="{{ route('login.perform') }}"
                                 class="btn btn-outline-primary mx-3 mt-2 d-block">Login</a>
@@ -134,11 +136,7 @@
                                         <p  class="mb-0 fs-3">My Profile (coming soon)</p>
                                     </a>
                                     
-                                    {{-- <a href="javascript:void(0)"
-                                        class="d-flex align-items-center gap-2 dropdown-item">
-                                        <i class="ti ti-list-check fs-6"></i>
-                                        <p class="mb-0 fs-3">My Task </p>
-                                    </a> --}}
+                                    
                                     <a href="{{ route('logout.perform') }}"
                                         class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
                                 </div>
@@ -157,3 +155,12 @@
 <script src="{{ asset('../assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
 <script src="{{ asset('../assets/libs/simplebar/dist/simplebar.js') }}"></script>
 <script src="{{ asset('../assets/js/dashboard.js') }}"></script>
+@section('scripts')
+<script>
+$("#selectLocale").on('change',function(){
+    var locale = $(this).val();
+  
+    window.location.href = "/changeLocale/"+locale;
+}) 
+</script>
+@endsection
