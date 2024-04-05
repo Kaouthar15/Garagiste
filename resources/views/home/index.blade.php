@@ -16,9 +16,9 @@
 
             <div class="bg-light p-5 rounded">
                 @auth
-                <h1 >Welcome {{ Auth::user()->firstName }} {{ Auth::user()->lastName }} !</h1>
-                <p class="lead">Today is {{ now()->format('l, F j, Y') }}.</p>
-                @if (Auth::user()->isAdmin)
+                <h1 >{{__('Welcome')}} {{ Auth::user()->firstName }} {{ Auth::user()->lastName }} !</h1>
+                <p class="lead">{{__('Today is')}} {{ now()->translatedFormat('l, F j, Y') }}.</p> 
+                @if (Auth::user()->isAdmin) 
                 <p class="lead">Only administrators can see this section.</p>
                 @endif
 

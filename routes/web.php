@@ -67,6 +67,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
     });
 
     Route::group(['middleware' => ['auth']], function () {
+        
         Route::controller(AdminController::class)->group(function(){
             Route::get('users', 'index');
             Route::get('users-export', 'export')->name('users.export');
@@ -119,10 +120,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
             Route::resource('vehicule', VehicleController::class);
             Route::get('/getVehicleImages/{id}', 'VehicleController@getImages');
 
-            Route::get('/changeLocale/{locale}',function($locale){
-                session()->put('locale',$locale);
-                return redirect()->back();
-            });
+           
         });
 
         Route::middleware([
@@ -150,4 +148,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
             )->name('mechanic.dashboard');
         });
     });
+});
+Route::get('/changeLocale/{locale}',function($locale){
+    session()->put('locale',$locale);
+    return redirect()->back();
 });

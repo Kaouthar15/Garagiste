@@ -95,6 +95,7 @@
     "Log Out": "تسجيل الخروج",
     "Login": "تسجيل الدخول",
     "Logout": "تسجيل الخروج",
+    "Welcome":"مرحبا",
     "Loop Detected": "تم الكشف عن حلقة",
     "Maintenance Mode": "نمط الصيانة",
     "Method Not Allowed": "الطريقة غير مسموحة",
@@ -202,5 +203,6 @@
     "View :name": "عرض :name",
     "Web Server is Down": "خادم الويب متوقف",
     "Yes": "نعم",
-    "You are logged in!": "لقد قمت بتسجيل الدخول!"
+    "You are logged in!": "لقد قمت بتسجيل الدخول!",
+    "Today is":"اليوم هو" 
 }

@@ -17,7 +17,7 @@ class LanguageMiddleware
     {
         if (session()->has('locale')){
             if (in_array(session('locale'),['fr','es','en','ar'])){
-                app()->getLocale(session('locale'));
+                app()->setLocale(session('locale'));
             }
         }
         return $next($request);

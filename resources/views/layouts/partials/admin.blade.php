@@ -1,3 +1,5 @@
+<html @if(app()->getLocale() == 'ar') dir="rtl" @endif 
+    lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -109,16 +111,17 @@
                 </ul>
                 <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
                     <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-                        <select id="selectLocale">
-                            <option @if (app()->getLocale() == 'ar') selected @endif value="ar">ar</option>
-                            <option @if (app()->getLocale() == 'fr') selected @endif value="fr">fr</option>
-                            <option @if (app()->getLocale() == 'es') selected @endif value="es">es</option>
-                            <option @if (app()->getLocale() == 'en') selected @endif value="en">en</option>
-                        </select>   
+                        {{-- {{session('locale')}} --}}
+                        <select name="selectLocale" id="selectLocale">
+                            <option @if(app()->getLocale() == 'ar') selected @endif value="ar">ar</option>
+                            <option @if(app()->getLocale() == 'fr') selected @endif value="fr">fr</option>
+                            <option @if(app()->getLocale() == 'en') selected @endif value="en">en</option>
+                            <option @if(app()->getLocale() == 'es') selected @endif value="es">es</option>
+                        </select>  
                         
                         @guest
                             <a href="{{ route('login.perform') }}"
-                                class="btn btn-outline-primary mx-3 mt-2 d-block">Login</a>
+                                class="btn btn-outline-primary mx-3 mt-2 d-block">{{__('Login')}}</a>
                             <a href="{{ route('register.perform') }}" class="btn btn-primary">Sign-up</a>
                         @endguest
                         <li class="nav-item dropdown">
@@ -138,7 +141,7 @@
                                     
                                     
                                     <a href="{{ route('logout.perform') }}"
-                                        class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                                        class="btn btn-outline-primary mx-3 mt-2 d-block">{{__('Logout')}}</a>
                                 </div>
                             </div>
                         </li>
@@ -164,3 +167,4 @@ $("#selectLocale").on('change',function(){
 }) 
 </script>
 @endsection
+</html>

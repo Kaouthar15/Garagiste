@@ -202,5 +202,7 @@
     "View :name": "View :name",
     "Web Server is Down": "Web Server is Down",
     "Yes": "Yes",
-    "You are logged in!": "You are logged in!"
+    "You are logged in!": "You are logged in!",
+    "Welcome":"Welcome",
+    "Today is":"Today is"
 }
