@@ -74,7 +74,7 @@
             var make = $(this).data('make');
             var clientPhoneNumber = $(this).data('clientphonenumber');
             var vehicleId = $(this).data('vehicleid');
-alert(vehicleId)
+
             $("#modalId").text(vehicleId);
             $("#modalRegistration").text(registration);
             $("#modalModel").text(model);
