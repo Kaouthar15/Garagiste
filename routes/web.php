@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\RegisterController;
+use LaravelLang\Publisher\Console\Add;
 
 /*
 |--------------------------------------------------------------------------
@@ -119,7 +120,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
             // Route::get('/details_vehicle/{id}', 'VehicleController@details')->name('vehicle.details');
             Route::resource('vehicule', VehicleController::class);
             Route::get('/getVehicleImages/{id}', 'VehicleController@getImages');
-
+            Route::get('/statistics/user','AdminController@chartsUser')->name('user.statistics');
+            Route::get('/statistics/vehicle','VehicleController@chartsVehicle')->name('vehicle.statistics');
            
         });
 

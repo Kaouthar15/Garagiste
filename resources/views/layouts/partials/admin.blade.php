@@ -6,7 +6,7 @@
     <title>Modernize </title>
     <link rel="stylesheet" href="{{ asset('../assets/css/styles.min.css') }}" />
     <link rel="shortcut icon" type="image/png" href="{{ asset('../assets/images/logos/favicon.png') }}" />
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
     data-sidebar-position="fixed" data-header-position="fixed">
@@ -79,10 +79,29 @@
                                 <i class="ti ti-car"></i>
 
                             </span>
-                            <span class="hide-menu">Show Cars</span>
+                            <span class="hide-menu">Show Vehicles</span>
                         </a>
                     </li>
-                    
+                    <li class="nav-small-cap">
+                        <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                        <span class="hide-menu">Statistics : </span>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{route('user.statistics')}}" aria-expanded="false">
+                            <span>
+                                <i class="fa fa-pie-chart"></i>
+                            </span>
+                            <span class="hide-menu">Users Statistics</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{route('vehicle.statistics')}}" aria-expanded="false">
+                            <span>
+                                <i class="fa fa-bar-chart"></i>
+                            </span>
+                            <span class="hide-menu">Vehicles Statistics</span>
+                        </a>
+                    </li>
                 </ul>
                 
             </nav>

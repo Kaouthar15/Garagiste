@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Vehicle;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VehicleController extends Controller
 {
@@ -117,5 +118,18 @@ class VehicleController extends Controller
         $images = $vehicle->images()->pluck('filename')->toArray();
 
         return response()->json(['success' => true, 'images' => $images]);
+    }
+    public function chartsVehicle(){
+        $petrolCount = DB::table('vehicles')->where('fuelType', 'Petrol')->count();
+        $dieselCount = DB::table('vehicles')->where('fuelType', 'Diesel')->count();
+        $electricCount = DB::table('vehicles')->where('fuelType', 'Electric')->count();
+    
+        $data = [
+            'labels' => ['Petrol', 'Diesel', 'Electric'],
+            'data' => [$petrolCount, $dieselCount, $electricCount],
+            'colors' => ['#615dff', '#3dd9eb', '#184feb'],
+        ];
+    
+        return view('charts.vehicleCharts', compact('data')); 
     }
 }

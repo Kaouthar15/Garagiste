@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Exports\UsersExport;
 use App\Imports\UsersImport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -88,7 +89,7 @@ class AdminController extends Controller
 
         $user->save();
 
-        return redirect()->route('admin.show')->with('success', 'User updated successfully');
+        return redirect()->route('admin.user.show')->with('success', 'User updated successfully');
     }
     public function search()
     {
@@ -96,12 +97,12 @@ class AdminController extends Controller
             ->simplePaginate(5);
         // ->latest()->paginate(5); 
 
-        return view('admin.search', compact('users'))->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('admin.user.show', compact('users'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('admin.show')->with('success', 'User deleted successfully');
+        return redirect()->route('admin.user.show')->with('success', 'User deleted successfully');
     }
     public function details($id)  
     {
@@ -125,5 +126,21 @@ class AdminController extends Controller
         Excel::import(new UsersImport,request()->file('file'));
                
         return back();
+    }
+    public function chartsUser(){
+        $clientsCount = DB::table('users')->where('isClient', 1)->count();
+    
+        $mechanicsCount = DB::table('users')->where('isMechanic', 1)->count();
+    
+        $bothCount = DB::table('users')->where('isClient', 1)->where('isMechanic', 1)->count();
+    
+        // Prepare data for the chart
+        $data = [
+            'labels' => ['Clients', 'Mechanics', 'Clients & Mechanics'],
+            'data' => [$clientsCount, $mechanicsCount, $bothCount],
+            'colors' => ['#615dff', '#3dd9eb', '#184feb'],
+        ];
+    
+        return view('charts.userCharts', compact('data')); 
     }
 }
