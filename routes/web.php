@@ -122,7 +122,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
             Route::get('/getVehicleImages/{id}', 'VehicleController@getImages');
             Route::get('/statistics/user','AdminController@chartsUser')->name('user.statistics');
             Route::get('/statistics/vehicle','VehicleController@chartsVehicle')->name('vehicle.statistics');
-           
+            Route::get('/users/{user}/download-pdf', 'AdminController@downloadPDF')->name('users.download-pdf');
+
         });
 
         Route::middleware([

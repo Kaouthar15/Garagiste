@@ -3,10 +3,10 @@
     <!-- Table Header -->
     <thead>
         <tr>
+            <th>Download</th>
             <th>Registration</th>
             <th>Model</th>
             <th>Fuel Type</th>
-            <th>Make</th>
             <th>Client</th>
             <th></th>
             <th></th>
@@ -17,10 +17,10 @@
     <tbody>
         @foreach ($vehicles as $vehicle)
             <tr>
-                <td class="py-1">{{ $vehicle->registration }}</td>
+                <td><i class="fa fa-download" style="font-size:30px;cursor:pointer;"></i></td>
+                <td>{{ $vehicle->registration }}</td>
                 <td>{{ $vehicle->model }}</td>
                 <td>{{ $vehicle->fuelType }}</td>
-                <td>{{ $vehicle->make }}</td>
                 <td>{{ $vehicle->user->phoneNumber }}</td>
                 <td><a class="btn btn-secondary edit-btn" data-vehicleid="{{ $vehicle->id }}">edit</a></td>
                 <td>

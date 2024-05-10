@@ -2,25 +2,13 @@
     @include('layouts.partials.messages')
     <thead>
         <tr>
-            <th>
-                Username
-            </th>
-
-            <th>
-                Phone Number
-            </th>
-            <th>
-                Email
-            </th>
-            <th>
-                State
-            </th>
-            <th>
-            </th>
-            <th>
-            </th>
-            <th>
-            </th>
+            <th>Download</th>
+            <th>Username</th>
+            <th>Phone Number</th>
+            <th>State</th>
+            <th></th>
+            <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -35,15 +23,11 @@
         </tr>
         @foreach ($users as $user)
             <tr>
-                <td class="py-1">
-                    {{ $user->username }}
-                </td>
                 <td>
-                    {{ $user->phoneNumber }}
+                    <i class="fa fa-download download-btn" href="{{ route('users.download-pdf', ['user' => $user->id]) }}"  data-user-id="{{ $user->id }}" style="font-size:30px; cursor: pointer;"></i>
                 </td>
-                <td>
-                    {{ $user->email }}
-                </td>
+                <td>{{ $user->username }}</td>
+                <td>{{ $user->phoneNumber }}</td>
                 <td>
                     @if ($user->isClient && $user->isMechanic)
                         Both
@@ -53,12 +37,8 @@
                         Mechanic
                     @endif
                 </td>
-                <td>
-                    <a class="btn btn-secondary" href="{{ route('user.edit', $user->id) }}">edit</a>
-                </td>
-                <td>
-                    <a class="btn btn-success" href="{{ route('admin.details', $user->id) }}">show</a>
-                </td>
+                <td><a class="btn btn-secondary" href="{{ route('user.edit', $user->id) }}">edit</a></td>
+                <td><a class="btn btn-success" href="{{ route('admin.details', $user->id) }}">show</a></td>
                 <td>
                     <form method="POST" id='delete-form-{{ $user->id }}'
                         action="{{ route('user.destroy', $user->id) }}">
@@ -97,5 +77,11 @@
                 });
             });
         });
+    $(document).ready(function() {
+        $('.download-btn').click(function() {
+            var userId = $(this).data('user-id');
+            window.location.href = '/users/' + userId + '/download-pdf';
+        });
+    });
     </script>
 @endsection

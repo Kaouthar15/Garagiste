@@ -31,6 +31,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_email_verified'
     ];
 
+    public function vehicles()
+    {
+        return $this->hasMany(Vehicle::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

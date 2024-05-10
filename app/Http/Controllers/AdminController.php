@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Dompdf\Dompdf;
 use App\Models\User;
 use App\Exports\UsersExport;
 use App\Imports\UsersImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\View;
 use Maatwebsite\Excel\Facades\Excel;
 
 class AdminController extends Controller
@@ -24,8 +26,12 @@ class AdminController extends Controller
     public function show()
     {
         $users = User::orderBy('id', 'desc')->simplePaginate(5);
+        // ->latest()->paginate(5);
 
-        return view('admin.user.show', ['users' => $users])->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('admin.user.show', ['users' => $users])->with(
+            'i',
+            (request()->input('page', 1) - 1) * 5
+        );
     }
 
     public function store(Request $request)
@@ -57,12 +63,12 @@ class AdminController extends Controller
 
         $user->save();
 
-
-        return redirect()->route('admin.show')->with('success', 'User created successfully');
+        return redirect()
+            ->route('admin.show')
+            ->with('success', 'User created successfully');
     }
     public function edit(User $user)
     {
-
         return view('admin.user.edit', compact('user'));
     }
     public function update(Request $request, User $user)
@@ -89,58 +95,105 @@ class AdminController extends Controller
 
         $user->save();
 
-        return redirect()->route('admin.user.show')->with('success', 'User updated successfully');
+        return view('admin.user.show',['users' => $user])->with('success', 'User updated successfully'); 
     }
     public function search()
     {
-        $users = User::where('username', 'like', '%' . request('search') . '%')
-            ->simplePaginate(5);
-        // ->latest()->paginate(5); 
+        $searchQuery = request('search');
 
-        return view('admin.user.show', compact('users'))->with('i', (request()->input('page', 1) - 1) * 5);
+        $users = User::where(function ($query) use ($searchQuery) {
+            $query
+                ->where('username', 'like', '%' . $searchQuery . '%')
+                ->orWhere('phoneNumber', 'like', '%' . $searchQuery . '%');
+        })->simplePaginate(5);
+
+        return view('admin.user.show', compact('users'))->with(
+            'i',
+            (request()->input('page', 1) - 1) * 5
+        );
     }
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('admin.user.show')->with('success', 'User deleted successfully');
+        return redirect()
+            ->route('admin.user.show')
+            ->with('success', 'User deleted successfully');
     }
-    public function details($id)  
+    public function details($id)
     {
         // $user = User::find(1);
         $user = User::findOrFail($id);
-        return view('admin.user.details',compact('user')); 
+        return view('admin.user.details', compact('user'));
     }
-     /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function export() 
-    {
-        return Excel::download(new UsersExport, 'users.xlsx');
-    }
-       
     /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function import() 
+     * @return \Illuminate\Support\Collection
+     */
+    public function export()
     {
-        Excel::import(new UsersImport,request()->file('file'));
-               
+        return Excel::download(new UsersExport(), 'users.xlsx');
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function import()
+    {
+        Excel::import(new UsersImport(), request()->file('file'));
+
         return back();
     }
-    public function chartsUser(){
-        $clientsCount = DB::table('users')->where('isClient', 1)->count();
-    
-        $mechanicsCount = DB::table('users')->where('isMechanic', 1)->count();
-    
-        $bothCount = DB::table('users')->where('isClient', 1)->where('isMechanic', 1)->count();
-    
-        // Prepare data for the chart
+    public function chartsUser()
+    {
+        $clientsCount = DB::table('users')
+            ->where('isClient', 1)
+            ->count();
+
+        $mechanicsCount = DB::table('users')
+            ->where('isMechanic', 1)
+            ->count();
+
+        $bothCount = DB::table('users')
+            ->where('isClient', 1)
+            ->where('isMechanic', 1)
+            ->count();
+
         $data = [
             'labels' => ['Clients', 'Mechanics', 'Clients & Mechanics'],
             'data' => [$clientsCount, $mechanicsCount, $bothCount],
             'colors' => ['#615dff', '#3dd9eb', '#184feb'],
         ];
-    
-        return view('charts.userCharts', compact('data')); 
+
+        return view('charts.userCharts', compact('data'));
+    }
+
+    public function downloadPDF(User $user)
+    {
+        $userData = [
+            'username' => $user->username,
+            'firstName' => $user->firstName,
+            'lastName' => $user->lastName,
+            'address' => $user->address,
+            'phoneNumber' => $user->phoneNumber,
+            'email' => $user->email,
+            'isClient' => $user->isClient,
+            'isMechanic' => $user->isMechanic,
+            // 'isAdmin' => $user->isAdmin,
+        ];
+
+        if ($user->isClient) {
+            $vehicles = $user->vehicles()->get();
+            $userData['vehicles'] = $vehicles;
+        }
+
+        $pdf = new Dompdf();
+        $pdf->loadHtml(
+            View::make('admin.user.pdf', compact('userData'))->render()
+        );
+
+        $pdf->setPaper('A4', 'landscape');
+
+        $pdf->render();
+
+        return $pdf->stream('user_data' . $user->phoneNumber . '.pdf');
     }
 }
