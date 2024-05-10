@@ -17,7 +17,9 @@
     <tbody>
         @foreach ($vehicles as $vehicle)
             <tr>
-                <td><i class="fa fa-download" style="font-size:30px;cursor:pointer;"></i></td>
+
+                <td><i class="fa fa-download download-btn" href="{{ route('vehicles.download-pdf', ['vehicle' => $vehicle->id]) }}"  data-vehicle-id="{{ $vehicle->id }}" style="font-size:30px; cursor: pointer;"></i></td>
+
                 <td>{{ $vehicle->registration }}</td>
                 <td>{{ $vehicle->model }}</td>
                 <td>{{ $vehicle->fuelType }}</td>
@@ -145,5 +147,12 @@
                 $("#myModal").hide();
             }
         })
+
+        $(document).ready(function() {
+        $('.download-btn').click(function() {
+            var vehicleId = $(this).data('vehicle-id');
+            window.location.href = '/vehicles/' + vehicleId + '/download-pdf';
+        });
+    });
     </script>
 @endsection

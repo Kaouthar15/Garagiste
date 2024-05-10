@@ -6,6 +6,8 @@ use App\Models\Vehicle;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
+use Dompdf\Dompdf;
 
 class VehicleController extends Controller
 {
@@ -131,5 +133,25 @@ class VehicleController extends Controller
         ];
     
         return view('charts.vehicleCharts', compact('data')); 
+    }
+    public function downloadPDF(Vehicle $vehicle)
+    {
+        $vehicleData = [
+            'registration'=>$vehicle->registration,
+            'model'=>$vehicle->model,
+            'fuelType'=>$vehicle->fuelType,
+            'make'=>$vehicle->make,
+            'Client_PhoneNumber'=>$vehicle->user->phoneNumber,
+        ];
+        $pdf = new Dompdf();
+        $pdf->loadHtml(
+            View::make('admin.vehicle.pdf', compact('vehicleData'))->render()
+        );
+
+        $pdf->setPaper('A4', 'landscape');
+
+        $pdf->render();
+
+        return $pdf->stream('vehicle_data' . $vehicle->registration . '.pdf');
     }
 }
