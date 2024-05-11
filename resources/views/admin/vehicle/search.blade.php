@@ -55,9 +55,7 @@
         width: 150px;
         height: auto;
         margin-right: 10px;
-        /* Espacement entre les images */
         margin-bottom: 10px;
-        /* Espacement entre les lignes */
     }
 </style>
 
