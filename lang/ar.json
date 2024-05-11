@@ -204,5 +204,8 @@
     "Web Server is Down": "خادم الويب متوقف",
     "Yes": "نعم",
     "You are logged in!": "لقد قمت بتسجيل الدخول!",
-    "Today is":"اليوم هو" 
+    "Today is":"اليوم هو",
+    "Statistics":"احصائيات",
+    "Vehicle":"عربة",
+    "Only administrators can see this section":"يمكن للمسؤولين فقط رؤية هذا القسم"
 }

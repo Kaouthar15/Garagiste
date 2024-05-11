@@ -19,7 +19,7 @@
                 <h1 >{{__('Welcome')}} {{ Auth::user()->firstName }} {{ Auth::user()->lastName }} !</h1>
                 <p class="lead">{{__('Today is')}} {{ now()->translatedFormat('l, F j, Y') }}.</p> 
                 @if (Auth::user()->isAdmin) 
-                <p class="lead">Only administrators can see this section.</p>
+                <p class="lead">{{__('Only administrators can see this section')}}</p>
                 @endif
 
                 @if (Auth::user()->isClient && !Auth::user()->isMechanic)

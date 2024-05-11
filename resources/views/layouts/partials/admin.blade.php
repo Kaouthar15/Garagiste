@@ -27,26 +27,26 @@
                 <ul id="sidebarnav">
                     <li class="nav-small-cap">
                         <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                        <span class="hide-menu">Home</span>
+                        <span class="hide-menu">{{__('Home')}}</span>
                     </li>
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="/" aria-expanded="false">
                             <span>
                                 <i class="ti ti-layout-dashboard"></i>
                             </span>
-                            <span class="hide-menu">Dashboard</span>
+                            <span class="hide-menu">{{__('Dashboard')}}</span>
                         </a>
                     </li>
                     <li class="nav-small-cap">
                         <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                        <span class="hide-menu"> Users :</span>
+                        <span class="hide-menu"> {{__('User')}} :</span>
                     </li>
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="{{ route('admin.create') }}" aria-expanded="false">
                             <span>
                                 <i class="ti ti-user-plus"></i>
                             </span>
-                            <span class="hide-menu">Add User</span>
+                            <span class="hide-menu">{{__('Add')}} {{__('User')}}</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
@@ -54,7 +54,7 @@
                             <span>
                                 <i class="ti ti-users"></i>
                             </span>
-                            <span class="hide-menu">Show Users</span>
+                            <span class="hide-menu">{{__('Show')}} {{__('User')}}</span>
                         </a>
                     </li>
                     
@@ -62,14 +62,14 @@
                     
                     <li class="nav-small-cap">
                         <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                        <span class="hide-menu">Vehicles : </span>
+                        <span class="hide-menu">{{__('Vehicle')}} : </span>
                     </li>
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="{{route('vehicle.create')}}" aria-expanded="false">
                             <span>
                                 <i class="ti ti-car"></i>
                             </span>
-                            <span class="hide-menu">Add Vehicle</span> 
+                            <span class="hide-menu">{{__('Add')}} {{__('Vehicle')}}</span> 
                         </a>
                     </li>
                     <li class="sidebar-item">
@@ -78,19 +78,19 @@
                                 <i class="ti ti-car"></i>
 
                             </span>
-                            <span class="hide-menu">Show Vehicles</span>
+                            <span class="hide-menu">{{__('Show')}} {{__('Vehicle')}}</span>
                         </a>
                     </li>
                     <li class="nav-small-cap">
                         <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                        <span class="hide-menu">Statistics : </span>
+                        <span class="hide-menu">{{__('Statistics')}} : </span>
                     </li>
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="{{route('user.statistics')}}" aria-expanded="false">
                             <span>
                                 <i class="fa fa-pie-chart"></i>
                             </span>
-                            <span class="hide-menu">Users Statistics</span>
+                            <span class="hide-menu">{{__('User')}} </span>
                         </a>
                     </li>
                     <li class="sidebar-item">
@@ -98,7 +98,7 @@
                             <span>
                                 <i class="fa fa-bar-chart"></i>
                             </span>
-                            <span class="hide-menu">Vehicles Statistics</span>
+                            <span class="hide-menu">{{__('Vehicle')}} </span>
                         </a>
                     </li>
                 </ul>
@@ -131,10 +131,10 @@
                     <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
                         {{-- {{session('locale')}} --}}
                         <select name="selectLocale" id="selectLocale">
-                            <option @if(app()->getLocale() == 'ar') selected @endif value="ar">ar</option>
-                            <option @if(app()->getLocale() == 'fr') selected @endif value="fr">fr</option>
-                            <option @if(app()->getLocale() == 'en') selected @endif value="en">en</option>
-                            <option @if(app()->getLocale() == 'es') selected @endif value="es">es</option>
+                            <option @if(app()->getLocale() == 'ar') selected @endif value="ar">🇲🇦</option>
+                            <option @if(app()->getLocale() == 'fr') selected @endif value="fr">🇫🇷</option>
+                            <option @if(app()->getLocale() == 'en') selected @endif value="en">🇺🇸</option>
+                            <option @if(app()->getLocale() == 'es') selected @endif value="es">🇪🇸</option>
                         </select>  
                         
                         @guest

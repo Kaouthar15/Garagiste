@@ -204,5 +204,8 @@
     "Yes": "Sí",
     "You are logged in!": "¡Usted está conectado!",
     "Welcome":"Bienvenido",
-    "Today is":"Hoy es"
+    "Today is":"Hoy es",
+    "Vehicle":"Vehículo",
+    "Only administrators can see this section":"Solo los administradores pueden ver esta sección"
+
 }
