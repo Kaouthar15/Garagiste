@@ -71,31 +71,34 @@ class AdminController extends Controller
     {
         return view('admin.user.edit', compact('user'));
     }
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
+        $user = User::findOrFail($id);
+
         $request->validate([
             'username' => 'required|string',
             'phoneNumber' => 'required|string',
             'firstName' => 'required|string',
             'lastName' => 'required|string',
-            'email' => 'required|email',
-            'password' => 'required|string',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|string',
             'isClient' => 'boolean',
             'isMechanic' => 'boolean',
             'address' => 'string',
         ]);
-        $user->fill($request->except('password', 'isClient', 'isMechanic'));
+
+        $user->fill($request->except('password'));
 
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }
 
-        $user->isClient = $request->has('isClient') ? true : false;
-        $user->isMechanic = $request->has('isMechanic') ? true : false;
+        $user->isClient = $request->has('isClient');
+        $user->isMechanic = $request->has('isMechanic');
 
         $user->save();
 
-        return view('admin.user.show',['users' => $user])->with('success', 'User updated successfully'); 
+        return redirect()->route('admin.show')->with('success', 'User updated successfully');
     }
     public function search()
     {
@@ -113,12 +116,14 @@ class AdminController extends Controller
         );
     }
     public function destroy(User $user)
-    {
-        $user->delete();
-        return redirect()
-            ->route('admin.user.show')
-            ->with('success', 'User deleted successfully');
+{
+    try {
+        $user->delete(); 
+        return response()->json(['success' => true, 'message' => 'User deleted successfully']);
+    } catch (\Exception $e) {
+        return response()->json(['success' => false, 'message' => 'Failed to delete user']);
     }
+}
     public function details($id)
     {
         // $user = User::find(1);

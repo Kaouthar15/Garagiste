@@ -22,7 +22,7 @@
             </form>
         </tr>
         @foreach ($users as $user)
-            <tr>
+            <tr id="user-row-{{ $user->id }}">
                 <td>
                     <i class="fa fa-download download-btn" href="{{ route('users.download-pdf', ['user' => $user->id]) }}"  data-user-id="{{ $user->id }}" style="font-size:30px; cursor: pointer;"></i>
                 </td>
@@ -40,13 +40,7 @@
                 <td><a class="btn btn-secondary" href="{{ route('user.edit', $user->id) }}">edit</a></td>
                 <td><a class="btn btn-success" href="{{ route('admin.details', $user->id) }}">show</a></td>
                 <td>
-                    <form method="POST" id='delete-form-{{ $user->id }}'
-                        action="{{ route('user.destroy', $user->id) }}">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" data-user-id="{{ $user->id }}"
-                            class="btn btn-danger delete-btn">delete</button>
-                    </form>
+                    <button type="button" data-user-id="{{ $user->id }}" class="btn btn-danger delete-btn">delete</button>
                 </td>
             </tr>
         @endforeach
@@ -61,6 +55,7 @@
             $('.delete-btn').click(function(event) {
                 event.preventDefault();
                 var userId = $(this).data('user-id');
+                var row = $('#user-row-' + userId);
 
                 Swal.fire({
                     title: 'Are you sure?',
@@ -72,16 +67,43 @@
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        $('#delete-form-' + userId).submit();
+                        $.ajax({
+                            url: '{{ url('user') }}/' + userId,
+                            type: 'DELETE',
+                            data: {
+                                "_token": "{{ csrf_token() }}",
+                            },
+                            success: function(response) {
+                                if(response.success) {
+                                    row.remove();
+                                    Swal.fire(
+                                        'Deleted!',
+                                        'User has been deleted.',
+                                        'success'
+                                    );
+                                } else {
+                                    Swal.fire(
+                                        'Error!',
+                                        'There was an error deleting the user.',
+                                        'error'
+                                    );
+                                }
+                            },
+                            error: function(response) {
+                                Swal.fire(
+                                    'Error!',
+                                    'There was an error deleting the user.',
+                                    'error'
+                                );
+                            }
+                        });
                     }
                 });
             });
+            $('.download-btn').click(function() {
+                var userId = $(this).data('user-id');
+                window.location.href = '/users/' + userId + '/download-pdf';
+            });
         });
-    $(document).ready(function() {
-        $('.download-btn').click(function() {
-            var userId = $(this).data('user-id');
-            window.location.href = '/users/' + userId + '/download-pdf';
-        });
-    });
     </script>
 @endsection

@@ -96,7 +96,9 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
             Route::post('/user/search', 'AdminController@search')->name(
                 'admin.search'
             );
-            Route::resource('user', AdminController::class); 
+            Route::resource('user', AdminController::class);
+            Route::put('/user/{id}', [AdminController::class, 'update'])->name('user.update'); 
+            Route::get('/user/{user}/edit', [AdminController::class, 'edit'])->name('user.edit');
             Route::get('/details/{id}', 'AdminController@details')->name(
                 'admin.details'
             );
