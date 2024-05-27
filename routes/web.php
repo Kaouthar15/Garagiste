@@ -60,16 +60,23 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
             'ForgotPasswordController@submitResetPasswordForm'
         )->name('reset.password.post');
 
-
-        Route::group(['middleware' => ['auth', 'is_verify_email']], function () {
-            Route::get('dashboard', [RegisterController::class, 'dashboard']);
-        }); 
-        Route::get('account/verify/{token}', [RegisterController::class, 'verifyAccount'])->name('user.verify'); 
+        Route::group(
+            ['middleware' => ['auth', 'is_verify_email']],
+            function () {
+                Route::get('dashboard', [
+                    RegisterController::class,
+                    'dashboard',
+                ]);
+            }
+        );
+        Route::get('account/verify/{token}', [
+            RegisterController::class,
+            'verifyAccount',
+        ])->name('user.verify');
     });
 
     Route::group(['middleware' => ['auth']], function () {
-        
-        Route::controller(AdminController::class)->group(function(){
+        Route::controller(AdminController::class)->group(function () {
             Route::get('users', 'index');
             Route::get('users-export', 'export')->name('users.export');
             Route::post('users-import', 'import')->name('users.import');
@@ -97,8 +104,13 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
                 'admin.search'
             );
             Route::resource('user', AdminController::class);
-            Route::put('/user/{id}', [AdminController::class, 'update'])->name('user.update'); 
-            Route::get('/user/{user}/edit', [AdminController::class, 'edit'])->name('user.edit');
+            Route::put('/user/{id}', [AdminController::class, 'update'])->name(
+                'user.update'
+            );
+            Route::get('/user/{user}/edit', [
+                AdminController::class,
+                'edit',
+            ])->name('user.edit');
             Route::get('/details/{id}', 'AdminController@details')->name(
                 'admin.details'
             );
@@ -119,16 +131,31 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
                 VehicleController::class,
                 'delete',
             ])->name('vehicle.delete');
-            Route::put('/vehicles/{vehicle}', [VehicleController::class, 'update'])->name('vehicle.update');
-            // Route::get('/details_vehicle/{id}', 'VehicleController@details')->name('vehicle.details');
+            Route::put('/vehicles/{vehicle}', [
+                VehicleController::class,
+                'update',
+            ])->name('vehicle.update');
             Route::resource('vehicule', VehicleController::class);
             Route::get('/getVehicleImages/{id}', 'VehicleController@getImages');
-            Route::get('/statistics/user','AdminController@chartsUser')->name('user.statistics');
-            Route::get('/statistics/vehicle','VehicleController@chartsVehicle')->name('vehicle.statistics');
-            Route::get('/users/{user}/download-pdf', 'AdminController@downloadPDF')->name('users.download-pdf');
-            Route::get('/vehicles/{vehicle}/download-pdf', 'VehicleController@downloadPDF')->name('vehicles.download-pdf');
-            Route::post('/vehicle/delete', [VehicleController::class, 'delete'])->name('vehicle.delete');
-
+            Route::get('/statistics/user', 'AdminController@chartsUser')->name(
+                'user.statistics'
+            );
+            Route::get(
+                '/statistics/vehicle',
+                'VehicleController@chartsVehicle'
+            )->name('vehicle.statistics');
+            Route::get(
+                '/users/{user}/download-pdf',
+                'AdminController@downloadPDF'
+            )->name('users.download-pdf');
+            Route::get(
+                '/vehicles/{vehicle}/download-pdf',
+                'VehicleController@downloadPDF'
+            )->name('vehicles.download-pdf');
+            Route::post('/vehicle/delete', [
+                VehicleController::class,
+                'delete',
+            ])->name('vehicle.delete');
         });
 
         Route::middleware([
@@ -157,7 +184,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         });
     });
 });
-Route::get('/changeLocale/{locale}',function($locale){
-    session()->put('locale',$locale);
+Route::get('/changeLocale/{locale}', function ($locale) {
+    session()->put('locale', $locale);
     return redirect()->back();
 });
