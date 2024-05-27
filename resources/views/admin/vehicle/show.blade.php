@@ -14,7 +14,6 @@
                 <div class="mt-4"></div>
                 <div class="card-body">
                     <div class='max-w-md mx-auto'>
-                        <!-- search bar -->
 
                     </div>
                     <p class="card-description"></p>

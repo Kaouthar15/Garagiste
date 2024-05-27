@@ -9,12 +9,12 @@
     <link rel="stylesheet" href="{{ asset('../assets/css/styles.min.css') }}" />
     <style>
         .card {
-            width: 600px; /* Adjust the width as per your requirement */
-            margin: auto; /* Centers the div horizontally */
-            position: absolute; /* Allows vertical centering */
-            top: 50%; /* Positions the top edge of the div at 50% of the containing element's height */
-            left: 50%; /* Positions the left edge of the div at 50% of the containing element's width */
-            transform: translate(-50%, -50%); /* Translates the div up and left by half of its own width and height */
+            width: 600px; 
+            margin: auto; 
+            position: absolute;
+            top: 50%; 
+            left: 50%;
+            transform: translate(-50%, -50%); 
         }
     </style>
 
@@ -38,7 +38,6 @@
                                     <img src="{{ asset('../assets/images/logos/dark-logo.svg') }}" width="180"
                                         alt="">
                                 </a>
-                                {{-- <p class="text-center">Your Social Campaigns</p> --}}
                                 <form method="POST" action="{{ route('register.perform') }}">
                                     @csrf
                                     <div class="row mb-3">

@@ -9,11 +9,8 @@
         border: 1px solid #888;
         width: 80%;
         max-width: 600px;
-        /* Limit the maximum width of the modal */
         border-radius: 10px;
-        /* Rounded corners */
         box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-        /* Box shadow for depth */
     }
 
     .modal-header,
@@ -21,9 +18,7 @@
         padding: 10px 16px;
         background-color: #f5f5f5;
         border-top-left-radius: 10px;
-        /* Match modal content border-radius */
         border-top-right-radius: 10px;
-        /* Match modal content border-radius */
     }
 
     .close {

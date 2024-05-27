@@ -42,7 +42,6 @@
             font-weight: bold;
         }
 
-        /* Add alternate row background color */
         tr:nth-child(even) {
             background-color: #f9f9f9;
         }

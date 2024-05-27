@@ -8,7 +8,6 @@
     <meta name="generator" content="Hugo 0.87.0">
     <title>Modernize</title>
 
-    <!-- Bootstrap core CSS -->
     <link href="{!! url('assets/bootstrap/css/bootstrap.min.css') !!}" rel="stylesheet">
     <link href="{!! url('assets/css/signin.css') !!}" rel="stylesheet">
     
@@ -29,7 +28,6 @@
     </style>
 
     
-    <!-- Custom styles for this template -->
     <link href="signin.css" rel="stylesheet">
 </head>
 <body class="text-center">
