@@ -206,6 +206,9 @@
     "Welcome":"Bienvenido",
     "Today is":"Hoy es",
     "Vehicle":"Vehículo",
-    "Only administrators can see this section":"Solo los administradores pueden ver esta sección"
+    "Only administrators can see this section":"Solo los administradores pueden ver esta sección",
+    "Manage":"Administrar",
+    "Vehicles":"Vehículos",
+    "Users":"Usuarias"
 
 }

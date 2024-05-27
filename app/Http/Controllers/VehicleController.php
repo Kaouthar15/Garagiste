@@ -16,14 +16,18 @@ class VehicleController extends Controller
         return view('admin.vehicle.create');
     }
     public function show()
-    {
-        $vehicles = Vehicle::orderBy('id', 'desc')->simplePaginate(5);
+{
+    $vehicles = Vehicle::orderBy('id', 'desc')->simplePaginate(5);
 
-        return view('admin.vehicle.show', ['vehicles' => $vehicles])->with(
-            'i',
-            (request()->input('page', 1) - 1) * 5
-        );
+    foreach ($vehicles as $vehicle) {
+        $vehicle->images = json_decode($vehicle->images, true);
     }
+
+    return view('admin.vehicle.show', ['vehicles' => $vehicles])->with(
+        'i',
+        (request()->input('page', 1) - 1) * 5
+    );
+}
     public function search()
     {
         $vehicles = Vehicle::where(
@@ -47,7 +51,7 @@ class VehicleController extends Controller
             'make' => 'required|string',
             'model' => 'required|string',
             'fuelType' => 'required|string',
-            'registration' => 'unique|required|string',
+            'registration' => 'required|string',
             'userId' => 'required|numeric',
             'images.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -61,7 +65,7 @@ class VehicleController extends Controller
         $vehicle->save();
 
         $images = [];
-        if ($request->hasFile('images')) { 
+        if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
                 $name = Str::random(30) . time();
                 $imageName = $name . '_' . $image->getClientOriginalName();
@@ -72,76 +76,95 @@ class VehicleController extends Controller
             $vehicle->save();
         }
 
-        return redirect()->route('vehicle.show') 
-->with('success', 'Vehicle created successfully');
-    }
-    public function delete(Request $request)
-    {
-        $vehicle = Vehicle::find($request->deleteId);
-        $vehicle->delete();
-        return 'ok';
-    }
-
-    public function update(Request $request)
-    {
-        $request->validate([
-            'vehicle_id' => 'required|exists:vehicles,id',
-            'editMake' => 'required|string',
-            'editModel' => 'required|string',
-            'editFuelType' => 'required|string',
-            'editRegistration' => 'required|string',
-            'editClientPhoneNumber' => 'required|string',
-        ]);
-
-        $vehicle = Vehicle::findOrFail($request->vehicle_id);
-
-        $vehicle->make = $request->editMake;
-        $vehicle->model = $request->editModel;
-        $vehicle->fuelType = $request->editFuelType;
-        $vehicle->registration = $request->editRegistration;
-
-        $user = $vehicle->user; 
-        $user->phoneNumber = $request->editClientPhoneNumber;
-
-        $vehicle->save();
-
         return redirect()
             ->route('vehicle.show')
-            ->with('success', 'Vehicle updated successfully');
-    }   
+            ->with('success', 'Vehicle created successfully');
+    }
+    public function delete(Request $request)
+{
+    $vehicleId = $request->input('deleteId');
+    // Assuming you have a Vehicle model with a method to delete by ID
+    $vehicle = Vehicle::find($vehicleId);
+    
+    if ($vehicle) {
+        $vehicle->delete();
+        return response()->json('ok');
+    } else {
+        return response()->json('error', 400);
+    }
+}
+
+
+public function update(Request $request, $vehicleId)
+{
+    $request->validate([
+        'editModel' => 'required|string',
+        'editFuelType' => 'required|string',
+        'editRegistration' => 'required|string',
+        'editClientPhoneNumber' => 'required|string',
+    ]);
+
+    $vehicle = Vehicle::findOrFail($vehicleId);
+    $vehicle->model = $request->editModel;
+    $vehicle->fuelType = $request->editFuelType;
+    $vehicle->registration = $request->editRegistration;
+
+    $user = $vehicle->user;
+    $user->phoneNumber = $request->editClientPhoneNumber;
+    $user->save();  // Don't forget to save the user
+    $vehicle->save();
+
+    return redirect()
+        ->route('vehicle.show')
+        ->with('success', 'Vehicle updated successfully');
+}
+
     public function getImages($id)
     {
         $vehicle = Vehicle::find($id);
 
         if (!$vehicle) {
-            return response()->json(['success' => false, 'message' => 'Vehicle not found'], 404);
+            return response()->json(
+                ['success' => false, 'message' => 'Vehicle not found'],
+                404
+            );
         }
 
-        $images = $vehicle->images()->pluck('filename')->toArray();
+        $images = $vehicle
+            ->images()
+            ->pluck('filename')
+            ->toArray();
 
         return response()->json(['success' => true, 'images' => $images]);
     }
-    public function chartsVehicle(){
-        $petrolCount = DB::table('vehicles')->where('fuelType', 'Petrol')->count();
-        $dieselCount = DB::table('vehicles')->where('fuelType', 'Diesel')->count();
-        $electricCount = DB::table('vehicles')->where('fuelType', 'Electric')->count();
-    
+    public function chartsVehicle()
+    {
+        $petrolCount = DB::table('vehicles')
+            ->where('fuelType', 'Petrol')
+            ->count();
+        $dieselCount = DB::table('vehicles')
+            ->where('fuelType', 'Diesel')
+            ->count();
+        $electricCount = DB::table('vehicles')
+            ->where('fuelType', 'Electric')
+            ->count();
+
         $data = [
             'labels' => ['Petrol', 'Diesel', 'Electric'],
             'data' => [$petrolCount, $dieselCount, $electricCount],
             'colors' => ['#615dff', '#3dd9eb', '#184feb'],
         ];
-    
-        return view('charts.vehicleCharts', compact('data')); 
+
+        return view('charts.vehicleCharts', compact('data'));
     }
     public function downloadPDF(Vehicle $vehicle)
     {
         $vehicleData = [
-            'registration'=>$vehicle->registration,
-            'model'=>$vehicle->model,
-            'fuelType'=>$vehicle->fuelType,
-            'make'=>$vehicle->make,
-            'Client_PhoneNumber'=>$vehicle->user->phoneNumber,
+            'registration' => $vehicle->registration,
+            'model' => $vehicle->model,
+            'fuelType' => $vehicle->fuelType,
+            'make' => $vehicle->make,
+            'Client_PhoneNumber' => $vehicle->user->phoneNumber,
         ];
         $pdf = new Dompdf();
         $pdf->loadHtml(

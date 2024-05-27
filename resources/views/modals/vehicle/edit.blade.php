@@ -1,9 +1,8 @@
-
 <div id="editModal" class="modal">
     <div class="modal-content edit-modal-content">
         <span class="close">&times;</span>
         <h2 class="edit-modal-title">Edit Vehicle</h2>
-        <form action="{{ route('vehicule.update', $vehicle->id) }}" method="POST">
+        <form action="" method="POST" id="editForm">
             @csrf
             @method('PUT')
             <input type="hidden" name="vehicle_id" id="editVehicleId">
@@ -20,14 +19,12 @@
                 <input type="text" id="editFuelType" name="editFuelType" class="form-control" required>
             </div>
             <div class="form-group">
-                <label for="editMake">Make:</label>
-                <input type="text" id="editMake" name="editMake" class="form-control" required>
-            </div>
-            <div class="form-group">
                 <label for="editClientPhoneNumber">Client Phone Number:</label>
                 <input type="text" id="editClientPhoneNumber" name="editClientPhoneNumber" class="form-control" required>
             </div>
+            
             <button type="submit" class="btn btn-primary edit-modal-button">Save</button>
+            <button type="button" class="btn btn-light cancel-modal-button">Cancel</button>
         </form>
     </div>
-</>
+</div>

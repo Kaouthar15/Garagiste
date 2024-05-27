@@ -54,7 +54,7 @@
                             <span>
                                 <i class="ti ti-users"></i>
                             </span>
-                            <span class="hide-menu">{{__('Show')}} {{__('User')}}</span>
+                            <span class="hide-menu">{{__('Manage')}} {{__('Users')}}</span>
                         </a>
                     </li>
                     
@@ -78,7 +78,7 @@
                                 <i class="ti ti-car"></i>
 
                             </span>
-                            <span class="hide-menu">{{__('Show')}} {{__('Vehicle')}}</span>
+                            <span class="hide-menu">{{__('Manage')}} {{__('Vehicles')}}</span>
                         </a>
                     </li>
                     <li class="nav-small-cap">
@@ -90,7 +90,7 @@
                             <span>
                                 <i class="fa fa-pie-chart"></i>
                             </span>
-                            <span class="hide-menu">{{__('User')}} </span>
+                            <span class="hide-menu">{{__('Users')}} </span>
                         </a>
                     </li>
                     <li class="sidebar-item">
@@ -98,7 +98,7 @@
                             <span>
                                 <i class="fa fa-bar-chart"></i>
                             </span>
-                            <span class="hide-menu">{{__('Vehicle')}} </span>
+                            <span class="hide-menu">{{__('Vehicles')}} </span>
                         </a>
                     </li>
                 </ul>

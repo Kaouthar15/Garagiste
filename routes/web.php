@@ -119,6 +119,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
                 VehicleController::class,
                 'delete',
             ])->name('vehicle.delete');
+            Route::put('/vehicles/{vehicle}', [VehicleController::class, 'update'])->name('vehicle.update');
             // Route::get('/details_vehicle/{id}', 'VehicleController@details')->name('vehicle.details');
             Route::resource('vehicule', VehicleController::class);
             Route::get('/getVehicleImages/{id}', 'VehicleController@getImages');
@@ -126,6 +127,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
             Route::get('/statistics/vehicle','VehicleController@chartsVehicle')->name('vehicle.statistics');
             Route::get('/users/{user}/download-pdf', 'AdminController@downloadPDF')->name('users.download-pdf');
             Route::get('/vehicles/{vehicle}/download-pdf', 'VehicleController@downloadPDF')->name('vehicles.download-pdf');
+            Route::post('/vehicle/delete', [VehicleController::class, 'delete'])->name('vehicle.delete');
 
         });
 

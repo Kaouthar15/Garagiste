@@ -3,17 +3,13 @@
 @section('content')
     <!doctype html>
     <html lang="en">
-
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Modernize Free</title>
         <link rel="shortcut icon" type="image/png" href="{{ asset('../assets/images/logos/favicon.png') }}" />
-
-
         <link rel="stylesheet" href="{{ asset('assets/css/styles.min.css') }}" />
     </head>
-
     <body>
         <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
             data-sidebar-position="fixed" data-header-position="fixed">
@@ -24,14 +20,11 @@
                         <div class="col-md-8 col-lg-6 col-xxl-3">
                             <div class="card mb-0">
                                 @include('layouts.partials.messages')
-
                                 <div class="card-body">
                                     <a href="{{ route('home.index') }}"
                                         class="text-nowrap logo-img text-center d-block py-3 w-100">
-                                        <img src="{{ asset('assets/images/logos/dark-logo.svg') }}" width="180"
-                                            alt="">
+                                        <img src="{{ asset('assets/images/logos/dark-logo.svg') }}" width="180" alt="">
                                     </a>
-                                    {{-- <p class="text-center">Your Social Campaigns</p> --}}
                                     <form method="post" action="{{ route('login.perform') }}">
                                         @csrf
                                         <div class="mb-3">
@@ -39,7 +32,7 @@
                                             <input type="text" class="form-control" id="username" name="username"
                                                 value="{{ old('username') }}" required autofocus>
                                             @if ($errors->has('username'))
-                                                <span class="text-danger">{{ $message }}</span>
+                                                <span class="text-danger">{{ $errors->first('username') }}</span>
                                             @endif
                                         </div>
                                         <div class="mb-4">
@@ -47,26 +40,22 @@
                                             <input type="password" class="form-control" id="exampleInputPassword1"
                                                 name="password" required>
                                             @if ($errors->has('password'))
-                                                <span class="text-danger">{{ $message }}</span>
+                                                <span class="text-danger">{{ $errors->first('password') }}</span>
                                             @endif
                                         </div>
                                         <div class="d-flex align-items-center justify-content-between mb-4">
                                             <div class="form-check">
-                                                <input class="form-check-input primary" type="checkbox" value=""
-                                                    id="remember" checked>
+                                                <input class="form-check-input primary" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                                                 <label class="form-check-label text-dark" for="remember">
                                                     Remember me
                                                 </label>
                                             </div>
-                                            <a class="text-primary fw-bold" href="{{ route('forget.password.get') }}">Forgot
-                                                Password?</a>
+                                            <a class="text-primary fw-bold" href="{{ route('forget.password.get') }}">Forgot Password?</a>
                                         </div>
-                                        <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Sign
-                                            In</button>
+                                        <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Sign In</button>
                                         <div class="d-flex align-items-center justify-content-center">
                                             <p class="fs-4 mb-0 fw-bold">New to Modernize?</p>
-                                            <a class="text-primary fw-bold ms-2" href="{{ route('register.show') }}">Create
-                                                an account</a>
+                                            <a class="text-primary fw-bold ms-2" href="{{ route('register.show') }}">Create an account</a>
                                         </div>
                                     </form>
                                 </div>
@@ -79,6 +68,5 @@
         <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
         <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
     </body>
-
     </html>
 @endsection

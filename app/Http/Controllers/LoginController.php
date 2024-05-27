@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
@@ -11,7 +12,7 @@ class LoginController extends Controller
     /**
      * Display login page.
      * 
-     * @return Renderable
+     * @return \Illuminate\Contracts\View\View
      */
     public function show()
     {
@@ -19,7 +20,7 @@ class LoginController extends Controller
     }
 
     /**
-     * Handle account login request
+     * Handle account login request.
      * 
      * @param LoginRequest $request
      * 
@@ -44,11 +45,12 @@ class LoginController extends Controller
     
         return $this->authenticated($request, $user);
     }
+
     /**
-     * Handle response after user authenticated
+     * Handle response after user authenticated.
      * 
      * @param Request $request
-     * @param Auth $user
+     * @param User $user
      * 
      * @return \Illuminate\Http\Response
      */

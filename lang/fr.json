@@ -207,6 +207,9 @@
     "Today is":"Aujourd'hui c'est le",
     "Vehicle":"Voiture",
     "Statistics":"Statistiques",
-    "Only administrators can see this section":"Seuls les administrateurs peuvent voir cette section"
+    "Only administrators can see this section":"Seuls les administrateurs peuvent voir cette section",
+    "Manage":"Gérer",
+    "Vehicles":"Voitures",
+    "Users":"Utilisateurs"
 
 }

@@ -207,5 +207,8 @@
     "Today is":"اليوم هو",
     "Statistics":"احصائيات",
     "Vehicle":"عربة",
-    "Only administrators can see this section":"يمكن للمسؤولين فقط رؤية هذا القسم"
+    "Only administrators can see this section":"يمكن للمسؤولين فقط رؤية هذا القسم",
+    "Manage":"إدارة",
+    "Vehicles":"المركبات",
+    "Users":"المستخدمين"
 }
