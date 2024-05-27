@@ -11,3 +11,9 @@
         
     </div>
 </div>
+<div id="imageModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <img id="largeImage" class="large-image" src="" alt="Large Vehicle Image">
+    </div>
+</div>

@@ -111,7 +111,7 @@ public function update(Request $request, $vehicleId)
 
     $user = $vehicle->user;
     $user->phoneNumber = $request->editClientPhoneNumber;
-    $user->save();  // Don't forget to save the user
+    $user->save(); 
     $vehicle->save();
 
     return redirect()

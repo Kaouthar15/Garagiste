@@ -1,10 +1,4 @@
 <style>
-    /* Existing styles */
-    body .blur-background {
-        backdrop-filter: blur(5px);
-        /* Blur the entire page */
-    }
-
     .modal-content {
         background-color: #fefefe;
         position: absolute;
